@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
@@ -14,6 +15,8 @@ import androidx.core.app.NotificationCompat;
 
 import com.bronko.broadcaster.MainActivity;
 import com.bronko.broadcaster.R;
+import com.pedro.encoder.input.gl.render.filters.object.TextObjectFilterRender;
+import com.pedro.encoder.utils.gl.TranslateTo;
 import com.pedro.rtplibrary.rtmp.RtmpCamera1;
 import com.pedro.rtplibrary.rtmp.RtmpCamera2;
 
@@ -103,5 +106,16 @@ public class ForegroundService extends Service {
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(serviceChannel);
         }
+    }
+
+    private void setTextToStream(String text, float textSize, int color) {
+        TextObjectFilterRender textObjectFilterRender = new TextObjectFilterRender();
+        rtmpCamera.getGlInterface().setFilter(textObjectFilterRender);
+        //textObjectFilterRender.setText(text, 22, Color.RED);
+        textObjectFilterRender.setText(text, textSize, color);
+        textObjectFilterRender.setDefaultScale(rtmpCamera.getStreamWidth(),
+                rtmpCamera.getStreamHeight());
+        textObjectFilterRender.setPosition(TranslateTo.BOTTOM_LEFT);
+        //spriteGestureController.setBaseObjectFilterRender(textObjectFilterRender); //Optional
     }
 }

@@ -79,8 +79,12 @@ public class ForegroundService extends Service {
             }
         });
         rtmpCamera.prepareAudio(128000,44100,false,false, false);
-        rtmpCamera.prepareVideo(240,320, 30,400,false, 0);
+        rtmpCamera.prepareVideo(320,240, 30,400,false, 0);
         rtmpCamera.startStream(streamAddress);
+
+
+
+      //  this.setTextToStream("hello3 world", 20, Color.RED);
 
         //stopSelf();
         return START_NOT_STICKY;
